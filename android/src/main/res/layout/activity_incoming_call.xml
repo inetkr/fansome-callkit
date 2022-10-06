@@ -7,164 +7,128 @@
 
     >
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/default_avatar"
+        android:scaleType="centerCrop"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#60000000"
+        />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:paddingHorizontal="52dp"
-        android:paddingVertical="64dp">
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/user_avatar"
-                android:layout_width="104dp"
-                android:layout_height="104dp"
-                android:layout_centerHorizontal="true"
-                android:src="@drawable/default_avatar"
-                tools:ignore="ContentDescription" />
-
-            <TextView
-                android:id="@+id/is_recall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="This recall will charge the recipient"
-                android:fontFamily="@font/lato_regular"
-                android:paddingTop="8dp"
-                android:textColor="@android:color/white"
-                android:textSize="16dp"
-                android:visibility="gone"
-                />
-
-            <TextView
-                android:id="@+id/user_name_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:ellipsize="end"
-                android:fontFamily="@font/lato_semibold"
-                android:lines="1"
-                android:paddingTop="8dp"
-                android:textColor="@android:color/white"
-
-                android:textSize="24dp"
-                tools:text="Jisoo" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/lato_regular"
-                android:paddingTop="8dp"
-                android:text="Calling..."
-                android:textColor="@android:color/white"
-                android:textSize="16dp" />
-
-            <TextView
-                android:id="@+id/user_price_txt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_bold"
-                android:gravity="center"
-                android:paddingTop="28dp"
-                android:text="20$/sec"
-                android:textColor="@android:color/white"
-                android:textSize="18dp" />
-        </LinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="bottom"
-
-
-            >
-
+            android:layout_height="match_parent"
+            android:layout_weight="1">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical">
-
-                    <RelativeLayout
-                        android:id="@+id/end_call_btn"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:background="@drawable/selector_call_end"
-                        android:gravity="center">
-
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:onClick="onEndCall"
-                            android:src="@drawable/ic_call_end"
-                            tools:ignore="ContentDescription" />
-                    </RelativeLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-
-                        android:ellipsize="end"
-                        android:lines="1"
-                        android:padding="8dp"
-                        android:text="Decline"
-                        android:textColor="@android:color/white"
-                        android:textSize="16dp" />
-                </LinearLayout>
-
+                android:gravity="center"
+                android:paddingVertical="21dp"
+                android:orientation="horizontal">
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-
-                <LinearLayout
+                    android:layout_marginLeft="22dp"
+                    android:layout_weight="1"/>
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical">
-
-                    <RelativeLayout
-                        android:id="@+id/start_call_btn"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:background="@drawable/selector_call_start"
-                        android:gravity="center">
-
-                        <ImageView
-                            android:id="@+id/ic_call"
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:onClick="onStartCall"
-
-                            android:src="@drawable/ic_video"
-                            tools:ignore="ContentDescription" />
-                    </RelativeLayout>
-
+                    android:gravity="center"
+                    android:layout_weight="1">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
-                        android:ellipsize="end"
-                        android:lines="1"
-                        android:padding="8dp"
-                        android:text="Accept"
+                        android:fontFamily="@font/pretendard_styles"
+                        android:textSize="21dp"
                         android:textColor="@android:color/white"
-                        android:textSize="16dp" />
-                </LinearLayout>
+                        android:text="Jisoo(27)"/>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:paddingRight="22dp"
+                    android:layout_weight="1">
+                    <ImageView
+                        android:id="@+id/end_call_btn"
+                        android:layout_width="18dp"
+
+                        android:layout_height="18dp"
+                        android:onClick="onEndCall"
+                        android:src="@drawable/ic_close"
+                        tools:ignore="ContentDescription" />
+                </RelativeLayout>
+            </LinearLayout>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:layout_weight="1">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:gravity="center"
+                android:orientation="vertical">
+
+
+
+                <TextView
+                    android:id="@+id/user_name_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/pretendard_styles"
+                    android:lines="1"
+                    android:textColor="@android:color/white"
+                    android:textSize="25dp"
+                    tools:text="영상채팅요청" />
+
+                <TextView
+                    android:id="@+id/user_price_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendard_styles"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="72dp"
+                    android:text="수신 시 1분당 100P가 소모됩니다."
+                    android:textColor="@android:color/white"
+                    android:textSize="16dp" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:background="@drawable/rounded_corner"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginBottom="36dp"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="수락"
+                        android:fontFamily="@font/pretendard_styles"
+                        android:textSize="16dp"
+                        />
+                </RelativeLayout>
+
 
             </LinearLayout>
         </RelativeLayout>
+
+
     </LinearLayout>
 </RelativeLayout>

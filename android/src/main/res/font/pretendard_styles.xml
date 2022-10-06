@@ -3,5 +3,5 @@
     <font
         android:fontStyle="normal"
         android:fontWeight="400"
-        android:font="@font/lato_regular" />
+        android:font="@font/pretendard_semibold" />
 </font-family>
