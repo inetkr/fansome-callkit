@@ -130,7 +130,7 @@ class IncomingCallActivity : Activity() {
             findViewById(resources.getIdentifier("user_price_txt", "id", packageName))
 
 
-        val avatar: CircleImageView =
+        val avatar: ImageView =
             findViewById(resources.getIdentifier("user_avatar", "id", packageName))
         var obj = JSONObject(callUserInfo)
         var caller = obj?.getString("caller")!!
