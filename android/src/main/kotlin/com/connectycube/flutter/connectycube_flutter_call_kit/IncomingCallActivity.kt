@@ -139,7 +139,7 @@ class IncomingCallActivity : Activity() {
 
         var callHistory = obj?.getString("call_history")!!
         var callHistoryObj = JSONObject(callHistory);
-        var callPrice = callHistoryObj?.getString("price_per_min")!!
+        var callPrice = callHistoryObj?.getString("pay_per_minute")!!
 
 
 
