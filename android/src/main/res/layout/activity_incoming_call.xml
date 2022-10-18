@@ -48,6 +48,7 @@
                     android:gravity="center"
                     android:layout_weight="1">
                     <TextView
+                        android:id="@+id/user_name_txt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/pretendard_styles"
@@ -87,7 +88,6 @@
 
 
                 <TextView
-                    android:id="@+id/user_name_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
@@ -116,6 +116,7 @@
                     android:background="@drawable/rounded_corner"
                     android:layout_marginHorizontal="20dp"
                     android:layout_marginBottom="36dp"
+                    android:onClick="onStartCall"
                     >
                     <TextView
                         android:layout_width="wrap_content"
