@@ -12,7 +12,7 @@ const val ACTION_CALL_REJECT = "action_call_reject"
 const val ACTION_CALL_NOTIFICATION_CANCELED = "action_call_notification_canceled"
 const val ACTION_CALL_ENDED = "action_call_ended"
 
-const val CALL_TYPE_PLACEHOLDER = "Incoming %s call"
+const val CALL_TYPE_PLACEHOLDER = "영상채팅 요청이 왔습니다"
 
 const val CALL_STATE_PENDING: String = "pending"
 const val CALL_STATE_ACCEPTED: String = "accepted"
