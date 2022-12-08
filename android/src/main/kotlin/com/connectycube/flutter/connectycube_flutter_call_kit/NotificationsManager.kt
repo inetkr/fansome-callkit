@@ -3,23 +3,21 @@ package com.connectycube.flutter.connectycube_flutter_call_kit
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
-import android.app.PendingIntent.FLAG_IMMUTABLE
-import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.graphics.Color
 import android.media.AudioAttributes
-import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
+import android.text.TextUtils
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import com.bumptech.glide.Glide
 import com.connectycube.flutter.connectycube_flutter_call_kit.utils.getColorizedText
-import java.util.concurrent.ExecutionException
+import com.connectycube.flutter.connectycube_flutter_call_kit.utils.getString
 
 const val CALL_CHANNEL_ID = "calls_channel_id"
 const val CALL_CHANNEL_NAME = "Calls"
@@ -31,26 +29,33 @@ fun cancelCallNotification(context: Context, callId: String) {
 }
 
 fun showCallNotification(
-    context: Context, callId: String, callType: Int, callInitiatorId: Int, photoUrl: String,
+    context: Context, callId: String, callType: Int, callInitiatorId: Int,
     callInitiatorName: String, callOpponents: ArrayList<Int>, userInfo: String
 ) {
     val notificationManager = NotificationManagerCompat.from(context)
 
     val intent = getLaunchIntent(context)
 
-
-
     val pendingIntent = PendingIntent.getActivity(
         context,
         callId.hashCode(),
         intent,
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE else PendingIntent.FLAG_UPDATE_CURRENT
+
     )
 
-    val ringtone: Uri = RingtoneManager.getActualDefaultRingtoneUri(
-        context.applicationContext,
-        RingtoneManager.TYPE_RINGTONE
-    )
+    var ringtone: Uri
+
+    val customRingtone = getString(context, "ringtone")
+    Log.d("NotificationsManager", "customRingtone $customRingtone")
+    if (!TextUtils.isEmpty(customRingtone)) {
+        ringtone = Uri.parse("android.resource://" + context.packageName + "/raw/" + customRingtone)
+        Log.d("NotificationsManager", "ringtone 1 $ringtone")
+    } else {
+        ringtone = Settings.System.DEFAULT_RINGTONE_URI
+    }
+
+    Log.d("NotificationsManager", "ringtone 2 $ringtone")
 
     val callTypeTitle =
         String.format(CALL_TYPE_PLACEHOLDER, if (callType == 1) "Video" else "Audio")
@@ -108,25 +113,6 @@ fun showCallNotification(
 
     // Set notification color accent
     setNotificationColor(context, builder)
-
-    // val futureTarget = Glide.with(context)
-    //         .asBitmap()
-    //         .load(photoUrl)
-    //         .submit()
-
-    // try {
-    //     builder.setLargeIcon(futureTarget.get())
-
-    // }
-    // catch (e: InterruptedException) {
-    //     //set bitmap fallback in case of glide get fail on a 404 response
-    // }
-    // catch (e: ExecutionException) {
-    //     //set bitmap fallback in case of glide get fail on a 404 response
-    // }
-
-
-    // Glide.with(context).clear(futureTarget)
 
     createCallNotificationChannel(notificationManager, ringtone)
 
@@ -225,7 +211,7 @@ fun addCallAcceptAction(
         callId.hashCode(),
         Intent(context, EventReceiver::class.java)
             .setAction(ACTION_CALL_ACCEPT)
-            .putExtras(bundle).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+            .putExtras(bundle),
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE else PendingIntent.FLAG_UPDATE_CURRENT
     )
     val acceptAction: NotificationCompat.Action = NotificationCompat.Action.Builder(
