@@ -15,10 +15,8 @@ typedef CallEventHandler = Future<dynamic> Function(CallEvent event);
 /// Plugin to manage call events and notifications
 /// {@endtemplate}
 class ConnectycubeFlutterCallKit {
-  static const MethodChannel _methodChannel =
-      const MethodChannel('connectycube_flutter_call_kit.methodChannel');
-  static const EventChannel _eventChannel =
-      const EventChannel('connectycube_flutter_call_kit.callEventChannel');
+  static const MethodChannel _methodChannel = const MethodChannel('connectycube_flutter_call_kit.methodChannel');
+  static const EventChannel _eventChannel = const EventChannel('connectycube_flutter_call_kit.callEventChannel');
 
   /// {@macro connectycube_flutter_call_kit}
   factory ConnectycubeFlutterCallKit() => _getInstance();
@@ -55,13 +53,7 @@ class ConnectycubeFlutterCallKit {
   ///
   /// - This function should only be called once at the beginning of
   /// your application.
-  void init({
-    CallEventHandler? onCallAccepted,
-    CallEventHandler? onCallRejected,
-    String? ringtone,
-    String? icon,
-    String? color
-  }) {
+  void init({CallEventHandler? onCallAccepted, CallEventHandler? onCallRejected, String? ringtone, String? icon, String? color}) {
     _onCallAccepted = onCallAccepted;
     _onCallRejected = onCallRejected;
 
@@ -79,8 +71,7 @@ class ConnectycubeFlutterCallKit {
     _onCallRejectedWhenTerminated = handler;
 
     if (handler != null) {
-      instance._registerBackgroundCallEventHandler(
-          handler, BackgroundCallbackName.REJECTED_IN_BACKGROUND);
+      instance._registerBackgroundCallEventHandler(handler, BackgroundCallbackName.REJECTED_IN_BACKGROUND);
     }
   }
 
@@ -93,26 +84,22 @@ class ConnectycubeFlutterCallKit {
     _onCallAcceptedWhenTerminated = handler;
 
     if (handler != null) {
-      instance._registerBackgroundCallEventHandler(
-          handler, BackgroundCallbackName.ACCEPTED_IN_BACKGROUND);
+      instance._registerBackgroundCallEventHandler(handler, BackgroundCallbackName.ACCEPTED_IN_BACKGROUND);
     }
   }
 
-  Future<void> _registerBackgroundCallEventHandler(
-      CallEventHandler handler, String callbackName) async {
+  Future<void> _registerBackgroundCallEventHandler(CallEventHandler handler, String callbackName) async {
     if (!Platform.isAndroid) {
       return;
     }
 
     if (_bgHandler == -1) {
-      final CallbackHandle bgHandle = PluginUtilities.getCallbackHandle(
-          _backgroundEventsCallbackDispatcher)!;
+      final CallbackHandle bgHandle = PluginUtilities.getCallbackHandle(_backgroundEventsCallbackDispatcher)!;
 
       _bgHandler = bgHandle.toRawHandle();
     }
 
-    final CallbackHandle userHandle =
-        PluginUtilities.getCallbackHandle(handler)!;
+    final CallbackHandle userHandle = PluginUtilities.getCallbackHandle(handler)!;
 
     await _methodChannel.invokeMapMethod('startBackgroundIsolate', {
       'pluginCallbackHandle': _bgHandler,
@@ -152,8 +139,7 @@ class ConnectycubeFlutterCallKit {
 
   /// Show incoming call notification
   static Future<void> showCallNotification(CallEvent callEvent) async {
-    return _methodChannel.invokeMethod(
-        "showCallNotification", callEvent.toMap());
+    return _methodChannel.invokeMethod("showCallNotification", callEvent.toMap());
   }
 
   /// Report that the current active call has been accepted by your application
@@ -162,8 +148,7 @@ class ConnectycubeFlutterCallKit {
     required String? sessionId,
     required int? callType,
   }) async {
-    return _methodChannel.invokeMethod(
-        "reportCallAccepted", {'session_id': sessionId, 'call_type': callType});
+    return _methodChannel.invokeMethod("reportCallAccepted", {'session_id': sessionId, 'call_type': callType});
   }
 
   /// Report that the current active call has been ended by your application
@@ -287,6 +272,7 @@ class ConnectycubeFlutterCallKit {
 // from the native portion of the plugin. This allows for the plugin to perform
 // any necessary processing in Dart (e.g., populating a custom object) before
 // invoking the provided callback.
+@pragma('vm:entry-point')
 void _backgroundEventsCallbackDispatcher() {
   // Initialize state necessary for MethodChannels.
   WidgetsFlutterBinding.ensureInitialized();
@@ -298,17 +284,14 @@ void _backgroundEventsCallbackDispatcher() {
   // This is where we handle background events from the native portion of the plugin.
   _channel.setMethodCallHandler((MethodCall call) async {
     if (call.method == 'onBackgroundEvent') {
-      final CallbackHandle handle =
-          CallbackHandle.fromRawHandle(call.arguments['userCallbackHandle']);
+      final CallbackHandle handle = CallbackHandle.fromRawHandle(call.arguments['userCallbackHandle']);
 
       // PluginUtilities.getCallbackFromHandle performs a lookup based on the
       // callback handle and returns a tear-off of the original callback.
-      final callback = PluginUtilities.getCallbackFromHandle(handle)!
-          as Future<void> Function(CallEvent);
+      final callback = PluginUtilities.getCallbackFromHandle(handle)! as Future<void> Function(CallEvent);
 
       try {
-        Map<String, dynamic> callEventMap =
-            Map<String, dynamic>.from(call.arguments['args']);
+        Map<String, dynamic> callEventMap = Map<String, dynamic>.from(call.arguments['args']);
         final CallEvent callEvent = CallEvent.fromMap(callEventMap);
         await callback(callEvent);
       } catch (e) {
