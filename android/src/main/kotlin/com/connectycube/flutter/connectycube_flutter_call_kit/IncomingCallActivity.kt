@@ -147,7 +147,7 @@ class IncomingCallActivity : Activity() {
         Glide.with(this).load(callerAvatar).placeholder(R.drawable.default_avatar)
             .into(avatar)
         callTitleTxt.text = callInitiatorName
-        price.text = "수신 시 1분당 ${callPrice}P가 소모됩니다."
+        price.text = "수신 시 1분당 ${callPrice}스타가 적립됩니다."
     }
 
     // calls from layout file

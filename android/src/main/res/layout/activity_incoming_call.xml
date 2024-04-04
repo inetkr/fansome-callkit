@@ -105,7 +105,7 @@
                     android:fontFamily="@font/pretendard_styles"
                     android:paddingTop="15dp"
                     android:paddingBottom="72dp"
-                    android:text="수신 시 1분당 100P가 소모됩니다."
+                    android:text="수신 시 1분당 100P스타가 적립됩니다."
                     android:textColor="@android:color/white"
                     android:textSize="16dp" />
 
