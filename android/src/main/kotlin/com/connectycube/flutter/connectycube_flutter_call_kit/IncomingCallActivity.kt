@@ -51,7 +51,13 @@ class IncomingCallActivity : Activity() {
     override fun onCreate(@Nullable savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-        setContentView(resources.getIdentifier("activity_incoming_call", "layout", packageName))
+        processIncomingData(intent)
+        if(callType == 2){
+            setContentView(resources.getIdentifier("activity_incoming_pluskit", "layout", packageName))
+        }else{
+            setContentView(resources.getIdentifier("activity_incoming_call", "layout", packageName))
+        }
+//        setContentView(resources.getIdentifier("activity_incoming_call", "layout", packageName))
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O_MR1) {
             setShowWhenLocked(true)
@@ -63,7 +69,7 @@ class IncomingCallActivity : Activity() {
             )
         }
 
-        processIncomingData(intent)
+
         initUi()
         initCallStateReceiver()
         registerCallStateReceiver()
@@ -147,7 +153,12 @@ class IncomingCallActivity : Activity() {
         Glide.with(this).load(callerAvatar).placeholder(R.drawable.default_avatar)
             .into(avatar)
         callTitleTxt.text = callInitiatorName
-        price.text = "수신 시 1분당 ${callPrice}스타가 적립됩니다."
+        if(callType == 1){
+            price.text = "수신 시 1분당 ${callPrice}스타가 적립됩니다.1"
+        }
+        else if(callType == 2){
+            price.text = "연결시 1분당 ${callPrice}스타가 적립됩니다."
+        }
     }
 
     // calls from layout file
