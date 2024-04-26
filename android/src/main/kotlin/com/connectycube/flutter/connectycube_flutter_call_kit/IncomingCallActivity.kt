@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.os.Handler
 import android.os.Looper
 import android.text.TextUtils
@@ -47,6 +48,7 @@ class IncomingCallActivity : Activity() {
     private var callOpponents: ArrayList<Int>? = ArrayList()
     private var callUserInfo: String? = null
 
+    private lateinit var timer: CountDownTimer
 
     override fun onCreate(@Nullable savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,10 +71,21 @@ class IncomingCallActivity : Activity() {
             )
         }
 
-
         initUi()
         initCallStateReceiver()
         registerCallStateReceiver()
+        if(callType == 2){
+            val countValue : TextView =  findViewById(resources.getIdentifier("count_down_txt", "id", packageName))
+            timer = object : CountDownTimer(4000, 1000){
+                override fun onTick(remaining: Long) {
+                    val formattedRemaining = String.format("%02d", remaining / 1000)
+                    countValue.text = formattedRemaining
+                }
+                override fun onFinish() {
+                    onStartCall(null)
+                }
+            }
+        }
     }
 
     private fun initCallStateReceiver() {
@@ -154,11 +167,23 @@ class IncomingCallActivity : Activity() {
             .into(avatar)
         callTitleTxt.text = callInitiatorName
         if(callType == 1){
-            price.text = "수신 시 1분당 ${callPrice}스타가 적립됩니다.1"
+            price.text = "수신 시 1분당 ${callPrice}스타가 적립됩니다."
         }
         else if(callType == 2){
             price.text = "연결시 1분당 ${callPrice}스타가 적립됩니다."
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if(callType == 2)
+            timer.start()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        if(callType == 2)
+            timer.cancel()
     }
 
     // calls from layout file
