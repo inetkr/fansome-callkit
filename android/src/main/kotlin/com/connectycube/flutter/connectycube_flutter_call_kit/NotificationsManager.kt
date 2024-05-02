@@ -110,7 +110,7 @@ fun showCallNotification(
     )
 
     // Set small icon for notification
-    setNotificationSmallIcon(context, builder)
+    setNotificationSmallIcon(context, builder, userInfo)
 
     // Set notification color accent
     setNotificationColor(context, builder)
