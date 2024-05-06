@@ -49,7 +49,7 @@ fun showCallNotification(
     var customRingtone = true
     Log.d("NotificationsManager", "customRingtone $customRingtone")
     if (customRingtone) {
-        ringtone = Uri.parse("res/raw/ringtone.mp3")
+        ringtone = Uri.parse("android.resource://" + context.packageName + "/raw/ringtone")
         Log.d("NotificationsManager", "ringtone 1 $ringtone")
     } else {
         ringtone = Settings.System.DEFAULT_RINGTONE_URI
