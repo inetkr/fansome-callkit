@@ -46,7 +46,7 @@ fun showCallNotification(
 
     var ringtone: Uri
 
-    val customRingtone = getBoolean(context, "ringtone")
+    var customRingtone = true
     Log.d("NotificationsManager", "customRingtone $customRingtone")
     if (customRingtone) {
         ringtone = Uri.parse("res/raw/ringtone.mp3")
