@@ -18,6 +18,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.connectycube.flutter.connectycube_flutter_call_kit.utils.getColorizedText
 import com.connectycube.flutter.connectycube_flutter_call_kit.utils.getString
+import org.json.JSONObject
 
 const val CALL_CHANNEL_ID = "calls_channel_id"
 const val CALL_CHANNEL_NAME = "Calls"
@@ -109,7 +110,7 @@ fun showCallNotification(
     )
 
     // Set small icon for notification
-    setNotificationSmallIcon(context, builder)
+    setNotificationSmallIcon(context, builder, userInfo)
 
     // Set notification color accent
     setNotificationColor(context, builder)
@@ -298,8 +299,14 @@ fun createCallNotificationChannel(notificationManager: NotificationManagerCompat
     }
 }
 
-fun setNotificationSmallIcon(context: Context, notificationBuilder: NotificationCompat.Builder) {
-    notificationBuilder.setSmallIcon(R.drawable.ic_notification)
+fun setNotificationSmallIcon(context: Context, notificationBuilder: NotificationCompat.Builder, userInfo: String) {
+    val json = JSONObject(userInfo)
+    val appType = json.optString("app_type", "")
+    if(appType == "celeb_app"){
+        notificationBuilder.setSmallIcon(R.drawable.ic_celeb_icon)
+    }else{
+        notificationBuilder.setSmallIcon(R.drawable.ic_notification)
+    }
 }
 
 fun setNotificationColor(context: Context, notificationBuilder: NotificationCompat.Builder) {
