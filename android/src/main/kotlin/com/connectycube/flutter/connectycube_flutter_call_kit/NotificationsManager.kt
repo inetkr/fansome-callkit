@@ -45,19 +45,18 @@ fun showCallNotification(
 
     )
 
-    val ringtone =  Uri.EMPTY
-//    var ringtone: Uri
-//
-//    val customRingtone = getString(context, "ringtone")
-//    Log.d("NotificationsManager", "customRingtone $customRingtone")
-//    if (!TextUtils.isEmpty(customRingtone)) {
-//        ringtone = Uri.parse("android.resource://" + context.packageName + "/raw/" + customRingtone)
-//        Log.d("NotificationsManager", "ringtone 1 $ringtone")
-//    } else {
-//        ringtone = Settings.System.DEFAULT_RINGTONE_URI
-//    }
-//
-//    Log.d("NotificationsManager", "ringtone 2 $ringtone")
+    var ringtone: Uri
+
+    var customRingtone = true
+    Log.d("NotificationsManager", "customRingtone $customRingtone")
+    if (customRingtone) {
+        ringtone = Uri.parse("android.resource://" + context.packageName + "/" + R.raw.ringtone)
+        Log.d("NotificationsManager", "ringtone 1 $ringtone")
+    } else {
+        ringtone = Settings.System.DEFAULT_RINGTONE_URI
+    }
+
+    Log.d("NotificationsManager", "ringtone 2 $ringtone")
 
     val callTypeTitle =
         String.format(CALL_TYPE_PLACEHOLDER, if (callType == 1) "Video" else "Audio")
