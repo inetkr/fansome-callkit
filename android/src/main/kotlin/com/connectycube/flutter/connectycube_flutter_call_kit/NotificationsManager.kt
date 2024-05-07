@@ -46,10 +46,10 @@ fun showCallNotification(
 
     var ringtone: Uri
 
-    val customRingtone = getString(context, "ringtone")
+    var customRingtone = true
     Log.d("NotificationsManager", "customRingtone $customRingtone")
-    if (!TextUtils.isEmpty(customRingtone)) {
-        ringtone = Uri.parse("android.resource://" + context.packageName + "/raw/" + customRingtone)
+    if (customRingtone) {
+        ringtone = Uri.parse("android.resource://" + context.packageName + "/" + R.raw.ringtone)
         Log.d("NotificationsManager", "ringtone 1 $ringtone")
     } else {
         ringtone = Settings.System.DEFAULT_RINGTONE_URI

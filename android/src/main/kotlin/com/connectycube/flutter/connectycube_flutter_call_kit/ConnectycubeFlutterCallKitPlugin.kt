@@ -171,11 +171,11 @@ class ConnectycubeFlutterCallKitPlugin : FlutterPlugin, MethodCallHandler,
                 try {
                     @Suppress("UNCHECKED_CAST") val arguments: Map<String, Any> =
                         call.arguments as Map<String, Any>
-                    val ringtone = arguments["ringtone"] as String?
+                    val ringtone = arguments["ringtone"] as Boolean?
                     val icon = arguments["icon"] as String?
                     val color = arguments["color"] as String?
 
-                    putString(applicationContext!!, "ringtone", ringtone)
+                    putBoolean(applicationContext!!, "ringtone", ringtone == true)
                     putString(applicationContext!!, "icon", icon)
                     putString(applicationContext!!, "color", color)
 
