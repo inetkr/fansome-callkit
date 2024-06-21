@@ -48,7 +48,7 @@ class IncomingCallActivity : Activity() {
     private var callOpponents: ArrayList<Int>? = ArrayList()
     private var callUserInfo: String? = null
 
-    private lateinit var timer: CountDownTimer
+//    private lateinit var timer: CountDownTimer
 
     override fun onCreate(@Nullable savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,15 +76,16 @@ class IncomingCallActivity : Activity() {
         registerCallStateReceiver()
         if(callType == 2){
             val countValue : TextView =  findViewById(resources.getIdentifier("count_down_txt", "id", packageName))
-            timer = object : CountDownTimer(4000, 1000){
-                override fun onTick(remaining: Long) {
-                    val formattedRemaining = String.format("%02d", remaining / 1000)
-                    countValue.text = formattedRemaining
-                }
-                override fun onFinish() {
-                    onStartCall(null)
-                }
-            }
+            onStartCall(null)
+//            timer = object : CountDownTimer(0, 1000){
+//                override fun onTick(remaining: Long) {
+//                    val formattedRemaining = String.format("%02d", remaining / 1000)
+//                    countValue.text = formattedRemaining
+//                }
+//                override fun onFinish() {
+//                    onStartCall(null)
+//                }
+//            }
         }
     }
 
@@ -176,14 +177,14 @@ class IncomingCallActivity : Activity() {
 
     override fun onStart() {
         super.onStart()
-        if(callType == 2)
-            timer.start()
+//        if(callType == 2)
+//            timer.start()
     }
 
     override fun onStop() {
         super.onStop()
-        if(callType == 2)
-            timer.cancel()
+//        if(callType == 2)
+//            timer.cancel()
     }
 
     // calls from layout file
