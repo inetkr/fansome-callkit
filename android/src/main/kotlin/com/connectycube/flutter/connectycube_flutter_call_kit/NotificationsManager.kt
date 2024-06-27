@@ -61,8 +61,12 @@ fun showCallNotification(
     val callTypeTitle =
         String.format(CALL_TYPE_PLACEHOLDER, if (callType == 1) "Video" else "Audio")
 
-    val builder: NotificationCompat.Builder =
-        createCallNotification(context, callInitiatorName, callTypeTitle, pendingIntent, ringtone)
+    val builder: NotificationCompat.Builder
+    if(callType == 1){
+        builder = createCallNotification(context, callInitiatorName, callTypeTitle, pendingIntent, ringtone)
+    }else{
+        builder = createPluskitNotification(context)
+    }
 
     // Add actions
     addCallRejectAction(
@@ -146,6 +150,14 @@ fun createCallNotification(
         .setSound(ringtone)
         .setPriority(NotificationCompat.PRIORITY_MAX)
         .setTimeoutAfter(60000)
+    return notificationBuilder
+}
+
+fun createPluskitNotification(
+    context: Context,
+): NotificationCompat.Builder {
+    val notificationBuilder = NotificationCompat.Builder(context, CALL_CHANNEL_ID)
+    notificationBuilder.setTimeoutAfter(0)
     return notificationBuilder
 }
 
