@@ -59,13 +59,11 @@ fun showCallNotification(
     Log.d("NotificationsManager", "ringtone 2 $ringtone")
 
     val callTypeTitle =
-        String.format(CALL_TYPE_PLACEHOLDER, if (callType == 1) "Video" else "Audio")
-
-    val builder: NotificationCompat.Builder
-    if(callType == 1){
-        builder = createCallNotification(context, callInitiatorName, callTypeTitle, pendingIntent, ringtone)
-    }else{
-        builder = createPluskitNotification(context)
+        String.format(CALL_TYPE_PLACEHOLDER, if (callType == 1 || callType == 2) "Video" else "Audio")
+    val builder: NotificationCompat.Builder = if (callType != 1) {
+        createPluskitNotification(context, callInitiatorName, ringtone, pendingIntent)
+    } else {
+        createCallNotification(context, callInitiatorName, callTypeTitle, pendingIntent, ringtone)
     }
 
     // Add actions
@@ -155,9 +153,22 @@ fun createCallNotification(
 
 fun createPluskitNotification(
     context: Context,
+    title: String,
+    ringtone: Uri,
+    pendingIntent: PendingIntent,
 ): NotificationCompat.Builder {
     val notificationBuilder = NotificationCompat.Builder(context, CALL_CHANNEL_ID)
-    notificationBuilder.setTimeoutAfter(0)
+    notificationBuilder
+        .setDefaults(NotificationCompat.DEFAULT_VIBRATE)
+        .setContentTitle(title)
+        .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+        .setAutoCancel(true)
+        .setOngoing(true)
+        .setCategory(NotificationCompat.CATEGORY_CALL)
+        .setContentIntent(pendingIntent)
+        .setSound(ringtone)
+        .setPriority(NotificationCompat.PRIORITY_MAX)
+        .setTimeoutAfter(200)
     return notificationBuilder
 }
 
